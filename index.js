@@ -13,7 +13,7 @@ var reservation ={
 		console.log("asdfasdf");
 		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03d30e4803f09276&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 		
-		res.send('hello wechat  <a href="'+link+'"> ');
+		res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},first:function (req,res){
 		console.log("first");
 		
