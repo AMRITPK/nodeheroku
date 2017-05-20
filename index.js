@@ -18,7 +18,7 @@ var reservation ={
 		console.log("first");
 		
 		res.send('first');
-	},resp:function(req,resp){
+	},resp:function(req,res){
 		console.log(req.query);
 		res.send("in auth resp</br>"+req.query.code);
 	}
