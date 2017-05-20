@@ -13,8 +13,8 @@ var reservation ={
 	root:function (req,res){
 		console.log("asdfasdf");
 		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-		
-		res.send('hello wechat  <a href="'+link+'"> link </a>');
+		res.redirect(link);
+		//res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},first:function (req,res){
 		console.log("first");
 		
