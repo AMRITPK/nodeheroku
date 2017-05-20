@@ -82,14 +82,16 @@ var reservation ={
 		res.redirect(link);
 		//res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},resp:function(req,res){
+		res.write('Hello\n');
+			  
 		servicefn(req.query.code, function error(errDetails){
 			console.log(errDetails);
-			res.send("error");
+			res.end("error");
 		},function success( userDetails ){
 			if(userDetails){
-				res.send("success"+userDetails.openId+"</br>"+userDetails.name+"</br>"+userDetails.country+"</br>"+userDetails.city+"</br>"+userDetails.sex+"</br>"+userDetails.image);				
+				res.end("success"+userDetails.openId+"</br>"+userDetails.name+"</br>"+userDetails.country+"</br>"+userDetails.city+"</br>"+userDetails.sex+"</br>"+userDetails.image);				
 			}else{
-				res.send("Didnt find user details");
+				res.end("Didnt find user details");
 			}
 		});
 	
