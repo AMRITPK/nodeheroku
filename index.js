@@ -5,13 +5,14 @@ var router = express.Router();
 
 var path = require('path');  
 
+var request= require('request');
 
-
-
+var appId='wxfaf116da42227208';
+var secret='a6db367433edc83413205d5f464e0a7a';
 var reservation ={
 	root:function (req,res){
 		console.log("asdfasdf");
-		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfaf116da42227208&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 		
 		res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},first:function (req,res){
@@ -21,6 +22,16 @@ var reservation ={
 	},resp:function(req,res){
 		console.log(req.query);
 		res.send("in auth resp</br>"+req.query.code);
+	},test:function(req,res){
+		var code='011z0ClG0JI0ah2cDelG0QgDlG0z0ClY';
+		var request = require('request');
+		var url="https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appId+"&secret="+secret+"&code=CODE&grant_type="+code
+		request(url, function (error, response, body) {
+			console.log('error:', error); // Print the error if one occurred
+			console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+			console.log('body:', body); // Print the HTML for the Google homepage.
+			res.send(body);
+		});
 	}
 }
 
