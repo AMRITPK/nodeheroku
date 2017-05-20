@@ -73,6 +73,9 @@ var servicefn=function(code,error,success){
 var appId='wxfaf116da42227208';
 var secret='a6db367433edc83413205d5f464e0a7a';
 var reservation ={
+	test:function (req,res){
+		res.send('test page');
+	}
 	root:function (req,res){
 		console.log("asdfasdf");
 		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
@@ -97,9 +100,10 @@ var reservation ={
 
 
 
-router.get('/', reservation.root);
-router.get('/resp', reservation.resp);
+router.get('/test', reservation.test);
 
+router.get('/resp', reservation.resp);
+router.get('/', reservation.root);
 
 
 app.use('/', router);
