@@ -6,25 +6,13 @@ var router = express.Router();
 var path = require('path');  
 
 var request= require('request');
-
-var appId='wxfaf116da42227208';
-var secret='a6db367433edc83413205d5f464e0a7a';
-var reservation ={
-	root:function (req,res){
-		console.log("asdfasdf");
-		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-		res.redirect(link);
-		//res.send('hello wechat  <a href="'+link+'"> link </a>');
-	},resp:function(req,res){
-		console.log(req.query);
-		//res.send("in auth resp</br>"+req.query.code);
-		//var code='051UPR3L1fSsN21chN0L1Rc34L1UPR3y';
-		var code=req.query.code;
+var servicefn(code,error,success){
+		
 		var request = require('request');
 		var url="https://api.wechat.com/sns/oauth2/access_token?appid="+appId+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
 		console.log(url);
-		request(url, function (error, response, body) {
-			console.log('error:', error); // Print the error if one occurred
+		request(url, function (error1, response, body) {
+			//console.log('error:', error1); // Print the error if one occurred
 			console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 			console.log('body:', body); // Print the HTML for the Google homepage.
 			
@@ -33,20 +21,19 @@ var reservation ={
 					
 					var respJson = JSON.parse(body);
 					if(respJson.errcode){
-						res.send("Error:already authenticated");
+						error("Error:already authenticated");
 					}else{
 						var access_token=respJson.access_token;
 						var openId=respJson.openid;
 						var url1="https://api.wechat.com/sns/userinfo?access_token="+access_token+"&openid="+openId;						
-						request(url1, function (error, response, body1) {
+						request(url1, function (error, response1, body1) {
 							console.log('error:', error); // Print the error if one occurred
-							console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+							console.log('statusCode:', response1 && response1.statusCode); // Print the response status code if a response was received
 							console.log('body:', body); // Print the HTML for the Google homepage.
-
-							if(response) {
+							if(response1) {
 								var resp2Json=JSON.parse(body1);
 								if(respJson.errcode){
-									res.send("Error:already authenticated");
+									error("Error:already authenticated");
 								}
 								console.log(resp2Json.openid);
 								console.log(resp2Json.nickname);
@@ -55,12 +42,19 @@ var reservation ={
 								console.log(resp2Json.city);
 								console.log(resp2Json.country);
 								console.log(resp2Json.headimgurl);
-
+								var resp={};
+								resp['openId']=resp2Json.openid;
+								resp['name']=resp2Json.nickname;
+								resp['sex']=resp2Json.sex;
+								resp['province']=resp2Json.province;
+								resp['city']=resp2Json.city;
+								resp['country']=resp2Json.country;
+								resp['image']=resp2Json.image;
+								
 								if(resp2Json.openid){
-									res.send('auth'+access_token +"</br>"+resp2Json.openid+"</br>"+resp2Json.nickname+"</br>"+resp2Json.headimgurl);	
-								}else{
-									
-									res.send('auth'+access_token);
+									success(resp);	
+								}else{									
+									error('code success');
 								}
 							}
 						});			
@@ -70,11 +64,32 @@ var reservation ={
 			
 				} catch(e) {
 					console.log("eroor in auth access_token") // error in the above string (in this case, yes)!
-					res.send('error in auth');
+					error('error in auth json');
 				}
 			}
 			
 		});		
+}
+var appId='wxfaf116da42227208';
+var secret='a6db367433edc83413205d5f464e0a7a';
+var reservation ={
+	root:function (req,res){
+		console.log("asdfasdf");
+		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+appId+"&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+		res.redirect(link);
+		//res.send('hello wechat  <a href="'+link+'"> link </a>');
+	},resp:function(req,res){
+		servicefn(req.query.code, function error(errDetails){
+			console.log(errDetails);
+			res.send("error");
+		},function success( userDetails ){
+			if(userDetails){
+				res.send("success"+userDetails.openId+"</br>"+userDetails.name+"</br>"+userDetails.country+"</br>"+userDetails.city+"</br>"+userDetails.sex+"</br>"+userDetails.image);				
+			}else{
+				res.send("Didnt find user details");
+			}
+		});
+	
 	}
 }
 
