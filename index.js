@@ -6,7 +6,7 @@ var router = express.Router();
 var path = require('path');  
 
 var request= require('request');
-var servicefn(code,error,success){
+var servicefn=function(code,error,success){
 		
 		var request = require('request');
 		var url="https://api.wechat.com/sns/oauth2/access_token?appid="+appId+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
