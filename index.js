@@ -24,7 +24,7 @@ var reservation ={
 		res.send("in auth resp</br>"+req.query.code);
 	},resp:function(req,res){
 		console.log(req.query);
-		res.send("in auth resp</br>"+req.query.code);
+		//res.send("in auth resp</br>"+req.query.code);
 		//var code='051UPR3L1fSsN21chN0L1Rc34L1UPR3y';
 		var code=req.query.code;
 		var request = require('request');
