@@ -11,13 +11,16 @@ var path = require('path');
 var reservation ={
 	root:function (req,res){
 		console.log("asdfasdf");
-		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx03d30e4803f09276&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+		var link ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfaf116da42227208&redirect_uri="+encodeURI("https://wechat777.herokuapp.com/resp")+"&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
 		
 		res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},first:function (req,res){
 		console.log("first");
 		
 		res.send('first');
+	},resp:function(req,resp){
+		console.log(req.query);
+		res.send("in auth resp</br>"+req.query.code);
 	}
 }
 
@@ -27,6 +30,7 @@ var reservation ={
 
 router.get('/', reservation.root);
 router.get('/first', reservation.first);
+router.get('/resp', reservation.resp);
 
 app.use('/', router);
 app.set('port', (process.env.PORT || 5000));
