@@ -11,28 +11,28 @@ var servicefn=function(code,error,success){
 		var request = require('request');
 		var url="https://api.wechat.com/sns/oauth2/access_token?appid="+appId+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
 		console.log(url);
-		request(url, function (error1, response, body) {
+		request(url, function (error1, response1, body1) {
 			//console.log('error:', error1); // Print the error if one occurred
-			console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-			console.log('body:', body); // Print the HTML for the Google homepage.
+			console.log('statusCode:', response1 && response1.statusCode); // Print the response status code if a response was received
+			console.log('body:', body1); // Print the HTML for the Google homepage.
 			
-			if(response) {
+			if(response1) {
 				try {
 					
-					var respJson = JSON.parse(body);
+					var respJson = JSON.parse(body1);
 					if(respJson.errcode){
 						error("Error:already authenticated");
 					}else{
 						var access_token=respJson.access_token;
 						var openId=respJson.openid;
 						var url1="https://api.wechat.com/sns/userinfo?access_token="+access_token+"&openid="+openId;						
-						request(url1, function (error, response1, body1) {
-							console.log('error:', error); // Print the error if one occurred
-							console.log('statusCode:', response1 && response1.statusCode); // Print the response status code if a response was received
-							console.log('body:', body); // Print the HTML for the Google homepage.
-							if(response1) {
-								var resp2Json=JSON.parse(body1);
-								if(respJson.errcode){
+						request(url1, function (error2, response2, body2) {
+							console.log('error:', error2); // Print the error if one occurred
+							console.log('statusCode:', response2 && response2.statusCode); // Print the response status code if a response was received
+							console.log('body:', body2); // Print the HTML for the Google homepage.
+							if(response2) {
+								var resp2Json=JSON.parse(body2);
+								if(resp2Json.errcode){
 									error("Error:already authenticated");
 								}
 								console.log(resp2Json.openid);
