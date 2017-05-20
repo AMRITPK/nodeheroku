@@ -64,7 +64,7 @@ var reservation ={
 								console.log(resp2Json.headimgurl);
 
 								if(resp2Json.openid){
-									res.send('auth'+access_token +"</br>"+respJson.openid+"</br>"+respJson.nickname+"</br>"+respJson.headimgurl);	
+									res.send('auth'+access_token +"</br>"+resp2Json.openid+"</br>"+resp2Json.nickname+"</br>"+resp2Json.headimgurl);	
 								}else{
 									
 									res.send('auth'+access_token);
