@@ -74,7 +74,25 @@ var appId='wxfaf116da42227208';
 var secret='a6db367433edc83413205d5f464e0a7a';
 var reservation ={
 	test:function (req,res){
-		res.send('test page');
+		var mysql      = require('mysql');
+		var connection = mysql.createConnection({
+		  host     : 'localhost',
+		  user     : 'root',
+		  password : '',
+		  database : 'wechatdb'
+		});
+		 
+		connection.connect();
+		 
+		connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+		  if (error) throw error;
+		  console.log('The solution is: ', results[0].solution);
+		  res.send(results[0].solution);
+		});
+		 
+		connection.end();
+				
+		
 	},
 	root:function (req,res){
 		console.log("asdfasdf");
@@ -82,6 +100,11 @@ var reservation ={
 		res.redirect(link);
 		//res.send('hello wechat  <a href="'+link+'"> link </a>');
 	},resp:function(req,res){
+		res.write('code=\n');
+			  res.end(req.query.code);
+		
+	
+	},resp_bak:function(req,res){
 		res.write('Hello\n');
 			  
 		servicefn(req.query.code, function error(errDetails){
@@ -91,7 +114,7 @@ var reservation ={
 			if(userDetails){
 				res.end("success"+userDetails.openId+"</br>"+userDetails.name+"</br>"+userDetails.country+"</br>"+userDetails.city+"</br>"+userDetails.sex+"</br>"+userDetails.image);				
 			}else{
-				res.end("Didnt find user details");
+				res.end	("Didnt find user details");
 			}
 		});
 	
