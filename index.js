@@ -73,7 +73,21 @@ var servicefn=function(code,error,success){
 var appId='wxfaf116da42227208';
 var secret='a6db367433edc83413205d5f464e0a7a';
 var reservation ={
-	test:function (req,res){
+	test:function(){
+		
+		
+var request= require('request');
+var appId='wxfaf116da42227208';
+var secret='a6db367433edc83413205d5f464e0a7a';
+
+servicefn('021UcfDk09Eldn1xThAk0vvBDk0UcfDc',function(aaa){
+	console.log(aaa);
+},function(bbb){
+	console.log(bbb);
+})
+
+	},
+	testsql:function (req,res){
 		var mysql      = require('mysql');
 		var connection = mysql.createConnection({
 		  host     : 'localhost',
