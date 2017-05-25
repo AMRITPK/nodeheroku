@@ -131,6 +131,8 @@ servicefn('021UcfDk09Eldn1xThAk0vvBDk0UcfDc',function(aaa){
 	fromwechat:function (req,res){
 		console.log("inside fromm wechat");
 		var code=req.query.code;
+		console.log("code=");
+		console.log(req.query.code);
 		res.redirect("https://www.paypal-proserv.com/wechat_stg001/wechat/resp?code="+code);
 		//res.send('hello wechat  <a href="'+link+'"> link </a>');
 	}
