@@ -135,13 +135,15 @@ servicefn('021UcfDk09Eldn1xThAk0vvBDk0UcfDc',function(aaa){
 		console.log(req.query.code);
 		res.redirect("https://www.paypal-proserv.com/wechat_stg001/wechat/resp?code="+code);
 		//res.send('hello wechat  <a href="'+link+'"> link </a>');
+	},test1:function(req,res){
+		res.send("<html> <a href='https://www.paypal-proserv.com/wechat_stg001/wechat/balance'>link to proserv</ </html>")	
 	}
 }
 
 
 
 
-
+router.get(',test1',reservation.test1);
 router.get('/test', reservation.test);
 
 router.get('/resp', reservation.resp);
